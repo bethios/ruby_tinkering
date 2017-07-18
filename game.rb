@@ -1,5 +1,13 @@
+require_relative 'board_info'
+require_relative 'player'
+
 class Game
+  attr_reader :board
+
   def initialize
+    @board = BoardInfo.new.board
+    @player = Player.new
+    @computer = Computer.new
   end
 
   def set_number_of_players
@@ -41,7 +49,7 @@ class Game
       if @number_players.to_i == 0
         evaluate_board
       elsif @number_players.to_i == 1
-        @current_player == @player1 ? humans_turn : evaluate_board
+        @current_player == @player1 ? @player.humans_turn : @computer.evaluate_board
       else
         humans_turn
       end
@@ -67,11 +75,8 @@ class Game
     [board[2], board[4], board[6]].uniq.length == 1
   end
 
-  def is_tie(b)
-    b.all? { |s| s == @player2 || s == @player1 }
+  def is_tie(board)
+    board.all? { |space| space == @player2 || space == @player1 }
   end
-
-
-
 end
 

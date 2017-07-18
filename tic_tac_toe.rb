@@ -1,9 +1,10 @@
 require_relative 'game'
-require_relative 'board'
+require_relative 'board_info'
 require_relative 'computer'
 require_relative 'player'
 
-board = Board.new
+board = BoardInfo.new.board
+puts board
 system "clear"
 puts "Welcome to Tic-Tac-Toe!"
 game = Game.new

@@ -1,6 +1,6 @@
 require 'colorize'
 
-class Board
+class BoardInfo
   attr_accessor :board
   attr_accessor :show_board
 
@@ -16,5 +16,4 @@ class Board
   def is_space_free(spot)
     @board[spot] != @player2 && @board[spot] != @player1
   end
-
 end
