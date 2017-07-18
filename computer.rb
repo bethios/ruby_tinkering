@@ -1,25 +1,24 @@
 class Computer
-  def eval_board
+  def evaluate_board
     computer_thinking
     spot = nil
     until spot
+      ##Clarify
       if @board[4] == "4"
         spot = 4
         @board[spot] = @current_player
       else
-        spot = get_best_move(@board, @current_player)
+        spot = get_computer_move(@board, @current_player)
         if @board[spot.to_i] =~ /\d/
           @board[spot.to_i] = @current_player
-        else
-          spot = nil
         end
       end
     end
     puts "The computer has played #{@current_player} in spot # #{spot}."
   end
 
-  def get_best_move(board, next_player, depth = 0, best_score = {})
-    @best_move = eval_winning_spaces(board)
+  def get_computer_move(board, next_player, depth = 0, best_score = {})
+    @best_move = evaluate_winning_spaces(board)
 
     if @best_move
       return @best_move
@@ -33,23 +32,23 @@ class Computer
     end
   end
 
-  def eval_winning_spaces(board)
+  def evaluate_winning_spaces(test_board)
     available_spaces = []
-    board.each do |s|
-      if s != @player2 && s != @player1
-        available_spaces << s
+    test_board.each do |space|
+      if space != @player2 && space != @player1
+        available_spaces << space
       end
     end
     other_player = @current_player == @player1 ? @player2 : @player1
     available_spaces.each do |as|
       [@current_player, other_player].each do |player|
-        board[as.to_i] = player
-        if game_is_over(board)
+        test_board[as.to_i] = player
+        if is_game_over(test_board)
           @best_move = as.to_i
-          board[as.to_i] = as
+          test_board[as.to_i] = as
           return @best_move
         else
-          board[as.to_i] = as
+          test_board[as.to_i] = as
         end
       end
     end
@@ -58,9 +57,12 @@ class Computer
 
   def play_offense
     if @board[4] == @current_player
-      if is_space_free(1) && is_space_free(7)
+      horizontal_spaces_free = is_space_free(1) && is_space_free(7)
+      vertical_spaces_free = is_space_free(3) && is_space_free(5)
+
+      if horizontal_spaces_free
         return 7
-      elsif is_space_free(3) && is_space_free(5)
+      elsif vertical_spaces_free
         return 3
       end
     end
@@ -68,9 +70,10 @@ class Computer
   end
 
   def play_corner
-    [2, 8, 6, 0].each do |c|
-      if is_space_free(c)
-        return c
+    corner_indecies = [2, 8, 6, 0]
+    corner_indecies.each do |corner|
+      if is_space_free(corner)
+        return corner
       end
     end
     return nil

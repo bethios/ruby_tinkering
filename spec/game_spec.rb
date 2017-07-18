@@ -7,7 +7,7 @@ RSpec.describe Game do
   let(:ask_players){game.set_number_of_players}
   let(:set_markers){game.set_player_markers}
   let(:play_order){game.set_play_order}
-  let(:start_game){game.start_game}
+  let(:run_game){game.run_game}
 
   describe "one player game" do
     context "start game" do
@@ -265,10 +265,10 @@ RSpec.describe Game do
   describe "knows when game is over" do
     context "evaluates win" do
       it "returns true to winning board" do
-        expect(game.game_is_over(["X", "X", "X", "3", "O", "5", "6", "7", "O"])).to be(true)
+        expect(game.is_game_over(["X", "X", "X", "3", "O", "5", "6", "7", "O"])).to be(true)
       end
       it "returns false to losing board" do
-        expect(game.game_is_over(["X", "O", "X", "3", "O", "5", "6", "7", "O"])).to be(false)
+        expect(game.is_game_over(["X", "O", "X", "3", "O", "5", "6", "7", "O"])).to be(false)
       end
     end
   end

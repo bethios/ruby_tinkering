@@ -1,10 +1,15 @@
 require_relative 'game'
+require_relative 'board'
+require_relative 'computer'
+require_relative 'player'
 
-game = Game.new
+board = Board.new
 system "clear"
 puts "Welcome to Tic-Tac-Toe!"
+game = Game.new
 game.set_number_of_players
-game.set_player_markers
+player = Player.new
+player.set_player_markers
 game.set_play_order
-game.start_game
-game.finish_game
+game.run_game
+game.announce_winner
